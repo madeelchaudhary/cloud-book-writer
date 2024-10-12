@@ -34,7 +34,7 @@ const BookDetail = ({ book, bookId, userId }: Props) => {
       </header>
 
       {/* Add New Section Modal */}
-      {userId === bookId && (
+      {userId === book.authorId && (
         <AddSectionModal parentSectionId={undefined} bookId={bookId} />
       )}
 
