@@ -45,8 +45,8 @@ model Section {
   parentId String? // For nesting sections
   bookId   String
 
-  book        Book      @relation(fields: [bookId], references: [id])
-  parent      Section?  @relation("Subsections", fields: [parentId], references: [id])
+  book        Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  parent      Section?  @relation("Subsections", fields: [parentId], references: [id], onDelete: Cascade)
   subsections Section[] @relation("Subsections")
 
   createdAt DateTime @default(now())
