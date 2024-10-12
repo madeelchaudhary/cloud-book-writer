@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+
+  books          Book[] @relation("AuthoredBooks")
+  collaborations Book[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id       String @id @default(cuid())
+  title    String
+  authorId String
+
+  author        User      @relation("AuthoredBooks", fields: [authorId], references: [id])
+  sections      Section[]
+  collaborators User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Section {
+  id       String  @id @default(cuid())
+  title    String
+  content  String?
+  parentId String? // For nesting sections
+  bookId   String
+
+  book        Book      @relation(fields: [bookId], references: [id])
+  parent      Section?  @relation("Subsections", fields: [parentId], references: [id])
+  subsections Section[] @relation("Subsections")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

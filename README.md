@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cloud Book Writer Platform
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a cloud-based book-writing platform built with Next.js, Prisma, and Shadcn-UI. The platform allows users to create, edit, and manage books with an unlimited number of sections and subsections. Users can collaborate on books by adding collaborators with roles like author or collaborator. The app also implements role-based permissions, where only the author can add sections, and both authors and collaborators can edit them.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Core Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Unlimited Sections and Subsections**: Users can create an unlimited number of nested sections within their books.
+- **User Authentication**: Secure authentication using the `authjs` package.
+- **Permissions & Roles**: Authors can manage books, sections, and collaborators. Collaborators can edit but not create new sections.
+- **Collaborator Management**: Authors can add, edit, or remove collaborators from a book.
+- **Server Actions**: All interactions (adding, editing, deleting sections/collaborators) are handled through server actions for a smooth user experience.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js**: Framework for React, allowing server-side rendering and server components.
+- **Prisma**: ORM for interacting with the database.
+- **Shadcn-UI**: UI components for a responsive and beautiful interface.
+- **authjs**: User authentication package used for secure login and registration.
+- **yarn**: Package manager used for this project.
 
-## Learn More
+## Setup Instructions
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Node.js** (v20 or higher)
+- **yarn** (v1.22.22 or higher)
+- **PostgreSQL** (or another supported database)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Steps
 
-## Deploy on Vercel
+1. **Clone the repository**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/your-repo/cloud-book-writer-platform.git
+   cd cloud-book-writer-platform
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Install dependencies**:
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Configure the environment**:
+   Create a .env file at the root of the project and add the following:
+
+   ```env
+   DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<dbname>
+   JWT_SECRET=<secret>
+   ```
+
+4. **Set up the database**:
+   Migrate the database using Prisma:
+
+   ```bash
+   pnpm prisma migrate dev
+   ```
+
+5. **Run the development server**:
+   ```bash
+   pnpm dev
+   ```
